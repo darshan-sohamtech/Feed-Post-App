@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Post Detail</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+
+    <div class="container mt-4">
+      <a href="/dashboard" class="btn btn-primary mb-2">Back To All Post</a>
+      <div class="my-3 text-center">
+        <hr class="border border-white" />
+        <h1>
+          <i class="fa-solid fa-hands-holding"></i>&nbsp;Post Detail &nbsp;<i
+            class="fa-solid fa-hands-holding"
+          ></i>
+        </h1>
+        <hr class="border border-white" />
+      </div>
+      <!--Post Detail Show-->
+      <div class="card">
+        <div class="card-header">
+          <i class="fa-solid fa-user">
+            <span class="">&nbsp;<%= post.createdBy.fullname %></span></i
+          >
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= post.postname %></h5>
+          <p class="card-text"><%= post.description %></p>
+        </div>
+      </div>
+    </div>
+
+    <!--Get All Comment Section-->
+
+    <div class="container mt-5">
+      <h1>All Comment( <%= comments.length %> )</h1>
+      <hr class="border border-white" />
+    </div>
+    <div class="container my-5">
+      <% if (comments.length === 0) {%>
+      <p>No Comment Yet! Be the first to leave a comment.</p>
+      <% } else if (comments.length >0 ) {%> <% comments.forEach(cmnt => { %>
+      <div class="container row" id="comment-container">
+        <div class="col-11 all-comment">
+          <div class="row">
+            <div class="col-1 d-flex align-self-center">
+              <i class="fa-solid fa-hands fs-3"></i>
+            </div>
+            <div class="col-11">
+              <h4><%= cmnt.createdBy.fullname %></h4>
+              <pre>Comment:-<%= cmnt.commentText %></pre>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border border-dark" />
+        <div class="container mb-5">
+          <!-- Comment Replies loop -->
+          <% cmnt.replies.forEach(rply => { %>
+          <!-- reply find with comment id -->
+          <% replys.forEach(reply => { %> <% if (reply._id.toString() ==
+          rply.toString()) { %>
+          <div class="container ms-5 mb-2">
+            <div class="row">
+              <div class="col-1 m-0 align-self-center">
+                <i class="fa-solid fa-franc-sign fs-3"></i>
+              </div>
+              <div class="col-9 align-self-start">
+                <h4><%= reply.createdBy.fullname %></h4>
+                <pre>Replay:-<%= reply.replayText %></pre>
+              </div>
+            </div>
+          </div>
+          <div
+            class="container"
+            style="
+              overflow-x: scroll;
+              overflow-y: scroll;
+              height: auto;
+              scrollbar-width: none;
+              scroll-behavior: smooth;
+              border: 10px;
+            "
+          >
+            <!-- check nested replay -->
+            <% if (reply.childID.length > 0) { %>
+            <div class="container ms-5">
+              <%- include('replies',{rp : reply}) %>
+            </div>
+            <% } %>
+            <!-- end nested reply -->
+          </div>
+          <% } %> <% }) %> <% }) %>
+        </div>
+      </div>
+      <% }) %> <%}%>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

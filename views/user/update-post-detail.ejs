@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <%- include('../partials/head') %>
+    <title>Update Post</title>
+  </head>
+  <body>
+    <%- include('../partials/user/nav') %>
+    <script type="text/javascript">
+      window.setTimeout(
+        "document.getElementById('flash-message').style.display='none';",
+        3000
+      );
+    </script>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-dark text-center" id="flash-message">
+      <%= locals.message %> &nbsp;&nbsp;<i
+        class="fa-solid fa-circle-xmark text-center"
+        onclick="closeMsg()"
+      ></i>
+    </div>
+    <% } %>
+    <div class="container">
+      <div class="my-3 text-center">
+        <hr class="border border-white" />
+        <a href="/post/dashboard" class="btn btn-primary mb-2"
+          >Back To All Post</a
+        >
+        <h1>
+          <i class="fa-solid fa-hands-holding"></i>&nbsp;Update Post
+          Detail&nbsp;<i class="fa-solid fa-hands-holding"></i>
+        </h1>
+        <hr class="border border-white" />
+      </div>
+      <form action="/post/update/<%= post[0]._id %>" method="post">
+        <div class="mb-3">
+          <label for="postname" class="form-label">Post-Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="postname"
+            name="postname"
+            value="<%= post[0].postname %>"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description">Description</label>
+          <input
+            name="description"
+            class="form-control"
+            id="description"
+            value="<%= post[0].description %>"
+          />
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary">Update Post</button>
+        </div>
+      </form>
+    </div>
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

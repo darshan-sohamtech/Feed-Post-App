@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Homepage</title>
+  </head>
+
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-5">
+      <div class="row">
+        <div
+          class="col-7 d-flex flex-col justify-content-start align-items-center"
+        >
+          <div class="ms-5">
+            <p class="fs-1">Feed Post Webiste</p>
+            <p class="fs-5">
+              Every child is an artist; the problem is staying an artist when
+              you grow up
+            </p>
+          </div>
+        </div>
+        <div class="col-5">
+          <img
+            src="https://timesnewsblog.com/wp-content/uploads/2022/05/Web-Design-Edkentmedia.png"
+            alt="Trulli"
+            style="width: 100%"
+            class="hero-img"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: white;
+        text-align: center;
+      "
+    >
+      <%- include('./partials/footer') %>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

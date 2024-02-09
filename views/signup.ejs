@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Signup</title>
+  </head>
+  <style>
+    .signup-text:hover {
+      color: red !important;
+    }
+    .btn-sun {
+      background-color: #ffc107 !important;
+      max-width: 150px;
+      min-width: 70px;
+      font-weight: 900;
+    }
+  </style>
+  <body>
+    <%- include('./partials/nav') %> <% if (message.length > 0) { %>
+    <script type="text/javascript">
+      window.setTimeout(
+        "document.getElementById('flash-message').style.display='none';",
+        5000
+      );
+    </script>
+    <div class="alert alert-dark text-center" id="flash-message">
+      <%= locals.message %> &nbsp;&nbsp;<i
+        class="fa-solid fa-circle-xmark text-center"
+        onclick="closeMsg()"
+      ></i>
+    </div>
+    <% } %>
+    <div class="container">
+      <div class="card mt-4 p-5">
+        <div class="card-header mb-2">
+          <h1 class="text-center">Registration</h1>
+        </div>
+        <form action="/auth/signup" method="post" class="mt-4 fs-5">
+          <div class="mb-3">
+            <label for="fullname" class="form-label">Full Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fullname"
+              name="fullname"
+              aria-describedby="fullname"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Password</label
+            >
+            <input
+              name="password"
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+              required
+            />
+          </div>
+
+          <div class="container text-center">
+            <input
+              type="submit"
+              class="btn btn-sun form-control"
+              value="Submit"
+            />
+          </div>
+        </form>
+        <div class="card-footer mt-5 fs-5">
+          <p class="text-center">
+            I have already an account..
+            <a class="text-primary signup-text" href="/auth/login">Login Here</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

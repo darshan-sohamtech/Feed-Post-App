@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <%-include('./partials/nav') %>
+    <div class="my-3 text-center">
+      <hr class="border border-white" />
+      <h1>
+        <i class="fa-solid fa-hands-holding"></i>&nbsp;Welcome To Dashboard&nbsp;<i
+          class="fa-solid fa-hands-holding"
+        ></i>
+      </h1>
+      <hr class="border border-white" />
+    </div>
+    <div class="row row-cols-md-3 row-cols-sm-2 container-fluid">
+      <% posts.forEach(post => { %>
+      <div class="container px-5 text-center">
+        <div class="card mt-5">
+          <div class="card-header"><%= post.createdBy.fullname %></div>
+          <div class="card-body">
+            <h5 class="card-title"><%= post.postname %></h5>
+            <p class="card-text"><%= post.description %></p>
+            <a href="/p/<%= post._id %>" class="btn btn-primary">View More</a>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

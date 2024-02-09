@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <%- include('../partials/head') %>
+    <title>Post Detail</title>
+  </head>
+  <style>
+    .card {
+      height: auto;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    
+  </style>
+  <body>
+    <%- include('../partials/user/nav') %>
+    <script type="text/javascript">
+      window.setTimeout(
+        "document.getElementById('flash-message').style.display='none';",
+        3000
+      );
+    </script>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-dark text-center" id="flash-message">
+      <%= locals.message %> &nbsp;&nbsp;<i
+        class="fa-solid fa-circle-xmark text-center"
+        onclick="closeMsg()"
+      ></i>
+    </div>
+    <% } %>
+    <div class="container mt-4">
+      <a href="/post/dashboard" class="btn btn-primary mb-2"
+        >Back To All Post</a
+      >
+      <div class="my-3 text-center">
+        <hr class="border border-white" />
+        <h1>
+          <i class="fa-solid fa-hands-holding"></i>&nbsp;Post Detail &nbsp;<i
+            class="fa-solid fa-hands-holding"
+          ></i>
+        </h1>
+        <hr class="border border-white" />
+      </div>
+      <!--Post Detail Show-->
+      <div class="card">
+        <div class="card-header">
+          <i class="fa-solid fa-user">
+            <span class="">&nbsp;<%= post.createdBy.fullname %></span></i
+          >
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= post.postname %></h5>
+          <p class="card-text"><%= post.description %></p>
+          <% if (locals.user) { %> <% if (locals.user._id == post.createdBy._id)
+          { %>
+          <a href="/post/update/<%= post._id %>" class="btn btn-outline-primary"
+            ><i class="fa-solid fa-pen-to-square"></i
+          ></a>
+          <a href="/post/delete/<%= post._id %>" class="btn btn-outline-danger"
+            ><i class="fa fa-trash" aria-hidden="true"></i
+          ></a>
+          <% } %> <% } %>
+        </div>
+      </div>
+    </div>
+    <!-- Comment Add Section -->
+    <div class="container mt-4">
+      <% if (locals.user) { %>
+      <form action="/comment/<%= post._id %>" method="post">
+        <div class="mb-3 row">
+          <div class="col-8">
+            <input
+              type="text"
+              name="commentText"
+              class="form-control col-8"
+              id="commentText"
+              placeholder="Enter your comment"
+              required
+            />
+          </div>
+          <div class="col-4">
+            <button class="btn btn-primary col-4" type="submit">
+              <i
+                class="fa-solid fa-paper-plane"
+                style="color: #e8eaed"
+                aria-hidden="true"
+              ></i>
+            </button>
+          </div>
+          <br />
+        </div>
+      </form>
+
+      <% } %>
+    </div>
+
+    <!--Get All Comment Section-->
+
+    <div class="container mt-5">
+      <h1>All Comment( <%= comments.length %> )</h1>
+      <hr class="border border-white" />
+    </div>
+    <div class="container my-5">
+      <% if (locals.user) { %> <% if (comments.length === 0) {%>
+      <p>No Comment Yet! Be the first to leave a comment.</p>
+      <% } else if (comments.length >0 ) {%> <% comments.forEach(cmnt => { %>
+      <div class="container row" id="comment-container">
+        <div class="col-11 all-comment">
+          <div class="row">
+            <div class="col-1 d-flex align-self-center">
+              <i class="fa-solid fa-hands fs-3"></i>
+            </div>
+            <div class="col-11">
+              <h4><%= cmnt.createdBy.fullname %></h4>
+              <pre>Comment:-<%= cmnt.commentText %></pre>
+            </div>
+            <% if (locals.user) { %>
+            <form action="/comment/reply/<%= cmnt._id %>" method="post">
+              <div class="mb-3 row">
+                <div class="col-8">
+                  <input
+                    type="text"
+                    name="replyText"
+                    class="form-control col-8"
+                    id="replyText"
+                    placeholder="Enter Your Reply"
+                    required
+                  />
+                </div>
+                <div class="col-4">
+                  <button class="btn btn-primary col-4" type="submit">
+                    <i
+                      class="fa-solid fa-paper-plane"
+                      style="color: #e8eaed"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                </div>
+                <br />
+              </div>
+            </form>
+            <% } %>
+          </div>
+        </div>
+        <div class="align-self-center col-1">
+          <% if (locals.user) { %> <% if (locals.user._id ==
+          post.createdBy._id|| locals.user._id== cmnt.createdBy._id) { %>
+          <a href="/comment/delete/<%= cmnt._id %>" class="btn btn-danger"
+            ><i class="fa fa-trash" aria-hidden="true"></i
+          ></a>
+          <% } %> <% } %>
+        </div>
+        <hr class="border border-dark" />
+        <div class="container mb-5">
+          <!-- Comment Replies loop -->
+          <% cmnt.replies.forEach(rply => { %>
+          <!-- reply find with comment id -->
+          <% replys.forEach(reply => { %> <% if (reply._id.toString() ==
+          rply.toString()) { %>
+          <div class="container ms-5 mb-2">
+            <div class="row">
+              <div class="col-1 m-0 align-self-center">
+                <i class="fa-solid fa-franc-sign fs-3"></i>
+              </div>
+              <div class="col-9 align-self-start">
+                <h4><%= reply.createdBy.fullname %></h4>
+                <pre>Replay:-<%= reply.replayText %></pre>
+                <% if (locals.user) { %>
+                <form action="/comment/reply/<%= reply._id %>" method="post">
+                  <div class="mb-3 row">
+                    <div class="col-8">
+                      <input
+                        type="text"
+                        name="replyText"
+                        class="form-control col-8"
+                        id="replyText"
+                        placeholder="Enter Your Reply"
+                        required
+                      />
+                    </div>
+                    <div class="col-4">
+                      <button class="btn btn-primary col-4" type="submit">
+                        <i
+                          class="fa-solid fa-paper-plane"
+                          style="color: #e8eaed"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </div>
+                    <br />
+                  </div>
+                </form>
+                <% } %>
+              </div>
+              <div class="col-2 align-self-center">
+                <% if (locals.user) { %> <% if (locals.user._id ==
+                post.createdBy._id|| locals.user._id== cmnt.createdBy._id ||
+                locals.user._id == reply.createdBy._id) { %>
+                <a
+                  href="/comment/delete/reply/<%= reply._id %>"
+                  class="btn btn-danger"
+                  ><i class="fa fa-trash" aria-hidden="true"></i
+                ></a>
+                <% } %> <% } %>
+              </div>
+            </div>
+          </div>
+          <div
+            class="container"
+            style="
+              overflow-x: scroll;
+              overflow-y: scroll;
+              height: auto;
+              scrollbar-width: none;
+              scroll-behavior: smooth;
+              border: 10px;
+            "
+          >
+            <!-- check nested replay -->
+            <% if (reply.childID.length > 0) { %>
+            <div class="container ms-5">
+              <%- include('replies',{rp : reply,post,cmnt}) %>
+            </div>
+            <% } %>
+            <!-- end nested reply -->
+          </div>
+          <% } %> <% }) %> <% }) %>
+        </div>
+      </div>
+      <% }) %> <%}%> <%} %>
+    </div>
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

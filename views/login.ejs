@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Login Page</title>
+  </head>
+  <style>
+    .signup-text:hover {
+      color: red !important;
+    }
+    .btn-sun {
+      background-color: #ffc107 !important;
+      max-width: 150px;
+      min-width: 70px;
+      font-weight: 900;
+    }
+    .col-form-label {
+      text-align: left;
+    }
+    .img-container {
+      max-height: 450px;
+      width: auto;
+      margin-right: 10px;
+      overflow: hidden;
+    }
+    @media screen {
+    }
+  </style>
+  <body>
+    <%- include('./partials/nav') %>
+    <script type="text/javascript">
+      window.setTimeout(
+        "document.getElementById('flash-message').style.display='none';",
+        5000
+      );
+    </script>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-dark text-center" id="flash-message">
+      <%= locals.message %> &nbsp;&nbsp;<i
+        class="fa-solid fa-circle-xmark text-center"
+        onclick="closeMsg()"
+      ></i>
+    </div>
+    <% } %>
+    <div class="container mt-5">
+      <div class="card border border-1">
+        <div class="d-flex flex-lg-row-reverse row">
+          <div class="container align-self-center p-3 col-lg-4 col-12">
+            <div class="img-container">
+              <img
+                src="https://www.farmersalmanac.com/wp-content/uploads/2020/11/darksidemoon-931x630.jpg"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="container col-lg-8 col-12 text-center">
+            <h1 class="card-header border-0 fs-1">Login</h1>
+            <form action="/auth/login" method="post">
+              <div class="m-5 fs-5">
+                <div class="mb-3 row">
+                  <label for="staticEmail" class="col-lg-2 fs-5 col-form-label"
+                    >Email</label
+                  >
+                  <div class="col-lg-10">
+                    <input
+                      type="email"
+                      name="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="inputPassword" class="col-lg-2 col-form-label"
+                    >Password</label
+                  >
+                  <div class="col-lg-10">
+                    <input
+                      name="password"
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="container">
+                <input
+                  type="submit"
+                  class="btn btn-sun form-control"
+                  value="Login"
+                />
+              </div>
+            </form>
+            <p class="text-center card-footer mt-5 py-5 fs-5 border-0">
+              Don't have an account?
+              <a class="text-primary signup-text" href="/auth/signup"
+                >Register here</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

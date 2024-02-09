@@ -1,0 +1,22 @@
+<% replys.forEach(reply => { %> <% if ( reply.commentOn.toString()==
+rp._id.toString() ) { %>
+<div class="container ms-5 mb-2">
+  <div class="row">
+    <div class="col-1 m-0 align-self-center">
+      <i class="fa-solid fa-franc-sign fs-3"></i>
+    </div>
+    <div class="col-9 align-self-start">
+      <h4><%= reply.createdBy.fullname %></h4>
+      <pre>Replay:-<%= reply.replayText %></pre>
+    </div>
+  </div>
+</div>
+<!-- check nested replay -->
+<% if (reply.childID.length > 0) { %>
+<div class="container ms-5"><%- include('replies',{rp : reply}) %></div>
+<% } %>
+<!-- end nested reply -->
+<!--  -->
+<% } %>
+<!--  -->
+<% }) %>
